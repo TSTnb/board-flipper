@@ -51,5 +51,14 @@
     }
 
     function flipBoard(button) {
+        let scope;
+        if (button instanceof HTMLElement) {
+            scope = button.closest('table');
+        } else {
+            scope = document.body;
+        }
+        const pattern = `:scope div > ${Array(8).fill('a.image[href^="/wiki/File:"][href$="Tet.png"]').join(' + ')}`;
+        [...scope.querySelectorAll(pattern)].map(el => el.parentElement).forEach(row => {
+        });
     }
 })();
