@@ -25,4 +25,31 @@
 // ==/UserScript==
 (() => {
     'use strict';
+
+    addFlipButtons();
+
+    function addFlipButtons() {
+        document.addEventListener('keydown', (event) => event.key === 'f' && flipBoard());
+        const navigationMenu = document.querySelector('div#gumax-p-navigation > ul#gumax-nav');
+        const flipLink = document.createElement('a');
+        flipLink.textContent = 'Flip boards';
+        flipLink.href = 'javascript:';
+        flipLink.alt = 'Shortcut: f';
+        flipLink.addEventListener('click', flipBoard);
+        navigationMenu.appendChild(document.createElement('li')).appendChild(flipLink);
+
+        const pattern = `:scope > tbody > tr > td > div > ${Array(8).fill('a.image[href^="/wiki/File:"][href$="Tet.png"]').join(' + ')}`;
+        const boardTables = [...document.querySelectorAll('table')].filter(element => element.querySelector(pattern));
+        boardTables.forEach(boardTable => {
+                const flipButton = document.createElement('button');
+                flipButton.textContent = 'Flip';
+                flipButton.class = 'mw-htmlform-submit flip-button';
+                flipButton.addEventListener('click', () => flipBoard(flipButton));
+                boardTable.appendChild(flipButton);
+            }
+        );
+    }
+
+    function flipBoard(button) {
+    }
 })();
