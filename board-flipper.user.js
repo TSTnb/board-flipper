@@ -74,10 +74,16 @@
         [...scope.querySelectorAll(pattern)].map(el => el.parentElement).forEach(row => {
             const children = [...row.childNodes].reverse();
             children.forEach(anchor => {
+                if (!(anchor instanceof HTMLAnchorElement)) {
+                    return;
+                }
                 const elements = {
                     a: anchor,
                     img: anchor.querySelector(':scope > img'),
                 };
+                if (!(minoProperties[elements.img.alt] instanceof Object)) {
+                    return;
+                }
                 const properties = minoProperties[minoProperties[elements.img.alt].reverse];
                 Object.keys(elements).forEach(tag =>
                     Object.keys(properties.attributes[tag]).forEach(attribute =>
