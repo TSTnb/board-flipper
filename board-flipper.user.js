@@ -16,7 +16,7 @@
 // @name         HD Wiki Board Flipper
 // @namespace    HD Wiki Board Flipper
 // @license      Apache 2.0
-// @version      v0.0.0
+// @version      v0.0.1
 // @description  Buttons to flip the stacking boards on the Hard Drop wiki
 // @homepage     https://github.com/TSTman/board-flipper
 // @author       TSTman
