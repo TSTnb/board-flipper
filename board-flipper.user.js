@@ -34,7 +34,7 @@
         const flipLink = document.createElement('a');
         flipLink.textContent = 'Flip boards';
         flipLink.href = 'javascript:';
-        flipLink.alt = 'Shortcut: f';
+        flipLink.title = 'Shortcut: f';
         flipLink.addEventListener('click', flipBoard);
         navigationMenu.appendChild(document.createElement('li')).appendChild(flipLink);
 
