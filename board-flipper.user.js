@@ -16,14 +16,15 @@
 // @name         HD Wiki Board Flipper
 // @namespace    HD Wiki Board Flipper
 // @license      Apache 2.0
-// @version      v0.0.1
+// @version      v0.0.2
 // @description  Buttons to flip the stacking boards on the Hard Drop wiki
 // @homepage     https://github.com/TSTman/board-flipper
 // @author       TSTman
 // @match        https://harddrop.com/wiki/*
 // @grant        none
+// @run-at       document-start
 // ==/UserScript==
-(() => {
+document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     addFlipButtons();
@@ -457,4 +458,4 @@
             children.forEach(child => row.appendChild(child));
         });
     }
-})();
+});
