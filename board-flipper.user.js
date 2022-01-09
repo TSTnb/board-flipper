@@ -24,7 +24,14 @@
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
-document.addEventListener('DOMContentLoaded', () => {
+(() => {
+    if (['complete', 'loaded', 'interactive'].indexOf(document.readyState) !== -1) {
+        boardFlipper();
+    } else {
+        document.addEventListener('DOMContentLoaded', boardFlipper);
+    }
+
+    function boardFlipper() {
     'use strict';
 
     addFlipButtons();
@@ -458,4 +465,5 @@ document.addEventListener('DOMContentLoaded', () => {
             children.forEach(child => row.appendChild(child));
         });
     }
-});
+    }
+})();
