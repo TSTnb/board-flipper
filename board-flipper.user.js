@@ -21,6 +21,7 @@
 // @homepage     https://github.com/TSTman/board-flipper
 // @author       TSTman
 // @match        https://harddrop.com/wiki/*
+// @match        https://harddrop.com/w/index.php*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
