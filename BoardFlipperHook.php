@@ -11,6 +11,7 @@ class BoardFlipperHook
 	{
 		global $wgScriptPath;
 		$out->addScriptFile("${wgScriptPath}/extensions/BoardFlipper/board-flipper.user.js");
+		$out->addStyle("${wgScriptPath}/extensions/BoardFlipper/styles/board-flipper.css");
 		return true;
 	}
 }

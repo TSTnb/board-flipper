@@ -50,11 +50,13 @@
             const pattern = `:scope > tbody > tr > td > div > ${Array(8).fill('a.image[href^="/wiki/File:"][href$="Tet.png"]').join(' + ')}`;
             const boardTables = [...document.querySelectorAll('table')].filter(element => element.querySelector(pattern));
             boardTables.forEach(boardTable => {
+                    const flipWrapper = document.createElement('div');
+                    flipWrapper.classList.add('flip-wrapper');
                     const flipButton = document.createElement('button');
                     flipButton.textContent = 'Flip';
                     flipButton.class = 'mw-htmlform-submit flip-button';
                     flipButton.addEventListener('click', () => flipBoard(flipButton));
-                    boardTable.appendChild(flipButton);
+                    boardTable.appendChild(flipWrapper).appendChild(flipButton);
                 }
             );
         }
