@@ -3,7 +3,7 @@
 	"author": "TSTman",
 	"url": "https://github.com/TSTman/board-flipper",
 	"description": "Buttons to flip the stacking boards on the Hard Drop wiki",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license-name": "Apache-2.0",
 	"AutoloadClasses": {
 		"BoardFlipperHook": "BoardFlipperHook.php"
