@@ -16,7 +16,7 @@
 // @name         HD Wiki Board Flipper
 // @namespace    HD Wiki Board Flipper
 // @license      Apache 2.0
-// @version      v0.0.5
+// @version      v0.0.6
 // @description  Buttons to flip the stacking boards on the Hard Drop wiki
 // @homepage     https://github.com/TSTman/board-flipper
 // @author       TSTman
@@ -446,6 +446,7 @@
                 scope = document.body;
             }
             const pattern = `:scope div > ${Array(8).fill('a.image[href^="/wiki/File:"][href$="Tet.png"]').join(' + ')}`;
+            const toUpperCase = String.prototype.toUpperCase.apply.bind(String.prototype.toUpperCase);
             [...scope.querySelectorAll(pattern)].map(el => el.parentElement).forEach(row => {
                 const children = [...row.childNodes].reverse();
                 children.forEach(anchor => {
@@ -456,10 +457,11 @@
                         a: anchor,
                         img: anchor.querySelector(':scope > img'),
                     };
-                    if (!(minoProperties[elements.img.alt] instanceof Object)) {
+                    const singleMinoProperties = minoProperties[toUpperCase(String(elements.img.alt))];
+                    if (!(singleMinoProperties instanceof Object)) {
                         return;
                     }
-                    const properties = minoProperties[minoProperties[elements.img.alt].reverse];
+                    const properties = minoProperties[singleMinoProperties.reverse];
                     Object.keys(elements).forEach(tag =>
                         Object.keys(properties.attributes[tag]).forEach(attribute =>
                             elements[tag].setAttribute(attribute, properties.attributes[tag][attribute])
