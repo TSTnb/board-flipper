@@ -26,66 +26,92 @@
 // @run-at       document-start
 // ==/UserScript==
 (() => {
-  if (['complete', 'loaded', 'interactive'].indexOf(document.readyState) !== -1) {
-    boardFlipper();
-  } else {
-    document.addEventListener('DOMContentLoaded', boardFlipper);
-  }
+	if (['complete', 'loaded', 'interactive'].indexOf(document.readyState) !== -1) {
+		boardFlipper();
+	} else {
+		document.addEventListener('DOMContentLoaded', boardFlipper);
+	}
 
-  function boardFlipper() {
-    'use strict';
-    
-    document.addEventListener('keydown', (event) => event.key === 'f' && flipBoard());
-  }
+	function boardFlipper() {
+		'use strict';
+
+		document.addEventListener('keydown', (event) => event.key === 'f' && flipBoard());
+	}
 })();
 var isBoardFlipped = false;
 
 const minoMap = [
-  { "initial": { "alt": "L", "src": "https://cdn.harddrop.com/5/51/LTet.png" },
-    "flipped": { "alt": "J", "src": "https://cdn.harddrop.com/8/85/JTet.png" } }, // L <=> J
-		{ "initial": { "alt": "S", "src": "https://cdn.harddrop.com/b/bc/STet.png" },
-		"flipped": { "alt": "Z", "src": "https://cdn.harddrop.com/c/c6/ZTet.png" } }, // S <=> Z
-		
-		{ "initial": { "alt": "LL", "src": "https://cdn.harddrop.com/8/87/LLTet.png" },
-		  "flipped": { "alt": "LJ", "src": "https://cdn.harddrop.com/8/83/LJTet.png" } }, // LL <=> LJ
-		{ "initial": { "alt": "LS", "src": "https://cdn.harddrop.com/a/ad/LSTet.png" },
-	  	"flipped": { "alt": "LZ", "src": "https://cdn.harddrop.com/7/79/LZTet.png" } }, // LS <=> LZ
+	{
+		"initial": {"alt": "L", "src": "https://cdn.harddrop.com/5/51/LTet.png"},
+		"flipped": {"alt": "J", "src": "https://cdn.harddrop.com/8/85/JTet.png"}
+	}, // L <=> J
+	{
+		"initial": {"alt": "S", "src": "https://cdn.harddrop.com/b/bc/STet.png"},
+		"flipped": {"alt": "Z", "src": "https://cdn.harddrop.com/c/c6/ZTet.png"}
+	}, // S <=> Z
 
-    { "initial": { "alt": "'L", "src": "https://cdn.harddrop.com/2/25/'LTet.png" },
-      "flipped": { "alt": "'J", "src": "https://cdn.harddrop.com/2/28/'JTet.png" } }, // 'L <=> 'J
-    { "initial": { "alt": "'S", "src": "https://cdn.harddrop.com/0/02/'STet.png" },
-      "flipped": { "alt": "'Z", "src": "https://cdn.harddrop.com/4/40/'ZTet.png" } }, // 'S <=> 'Z
+	{
+		"initial": {"alt": "LL", "src": "https://cdn.harddrop.com/8/87/LLTet.png"},
+		"flipped": {"alt": "LJ", "src": "https://cdn.harddrop.com/8/83/LJTet.png"}
+	}, // LL <=> LJ
+	{
+		"initial": {"alt": "LS", "src": "https://cdn.harddrop.com/a/ad/LSTet.png"},
+		"flipped": {"alt": "LZ", "src": "https://cdn.harddrop.com/7/79/LZTet.png"}
+	}, // LS <=> LZ
 
-    { "initial": { "alt": "-L", "src": "https://cdn.harddrop.com/a/ae/-LTet.png" },
-      "flipped": { "alt": "-J", "src": "https://cdn.harddrop.com/f/f3/-JTet.png" } }, // -L <=> -J
-    { "initial": { "alt": "-S", "src": "https://cdn.harddrop.com/7/72/-STet.png" },
-      "flipped": { "alt": "-Z", "src": "https://cdn.harddrop.com/6/67/-ZTet.png" } }, // -S <=> -Z
+	{
+		"initial": {"alt": "'L", "src": "https://cdn.harddrop.com/2/25/'LTet.png"},
+		"flipped": {"alt": "'J", "src": "https://cdn.harddrop.com/2/28/'JTet.png"}
+	}, // 'L <=> 'J
+	{
+		"initial": {"alt": "'S", "src": "https://cdn.harddrop.com/0/02/'STet.png"},
+		"flipped": {"alt": "'Z", "src": "https://cdn.harddrop.com/4/40/'ZTet.png"}
+	}, // 'S <=> 'Z
 
-    { "initial": { "alt": "+L", "src": "https://cdn.harddrop.com/4/4c/+LTet.png" },
-      "flipped": { "alt": "+J", "src": "https://cdn.harddrop.com/8/8e/+JTet.png" } }, // +L <=> +J
-    { "initial": { "alt": "+S", "src": "https://cdn.harddrop.com/9/9c/+STet.png" },
-      "flipped": { "alt": "+Z", "src": "https://cdn.harddrop.com/9/9d/+ZTet.png" } }, // +S <=> +Z
+	{
+		"initial": {"alt": "-L", "src": "https://cdn.harddrop.com/a/ae/-LTet.png"},
+		"flipped": {"alt": "-J", "src": "https://cdn.harddrop.com/f/f3/-JTet.png"}
+	}, // -L <=> -J
+	{
+		"initial": {"alt": "-S", "src": "https://cdn.harddrop.com/7/72/-STet.png"},
+		"flipped": {"alt": "-Z", "src": "https://cdn.harddrop.com/6/67/-ZTet.png"}
+	}, // -S <=> -Z
 
-    { "initial": { "alt": "!S", "src": "https://cdn.harddrop.com/b/b1/!STet.png" },
-      "flipped": { "alt": "!Z", "src": "https://cdn.harddrop.com/2/29/!ZTet.png" } }, // !S <=> !Z
-      
-    { "initial": { "alt": "SL", "src": "https://cdn.harddrop.com/7/71/SLTet.png" },
-      "flipped": { "alt": "SJ", "src": "https://cdn.harddrop.com/e/e7/SJTet.png" } }, // SL <=> SJ
-    { "initial": { "alt": "SS", "src": "https://cdn.harddrop.com/0/00/SSTet.png" },
-      "flipped": { "alt": "SZ", "src": "https://cdn.harddrop.com/2/28/SZTet.png" } }, // SS <=> SZ
-  ];
+	{
+		"initial": {"alt": "+L", "src": "https://cdn.harddrop.com/4/4c/+LTet.png"},
+		"flipped": {"alt": "+J", "src": "https://cdn.harddrop.com/8/8e/+JTet.png"}
+	}, // +L <=> +J
+	{
+		"initial": {"alt": "+S", "src": "https://cdn.harddrop.com/9/9c/+STet.png"},
+		"flipped": {"alt": "+Z", "src": "https://cdn.harddrop.com/9/9d/+ZTet.png"}
+	}, // +S <=> +Z
+
+	{
+		"initial": {"alt": "!S", "src": "https://cdn.harddrop.com/b/b1/!STet.png"},
+		"flipped": {"alt": "!Z", "src": "https://cdn.harddrop.com/2/29/!ZTet.png"}
+	}, // !S <=> !Z
+
+	{
+		"initial": {"alt": "SL", "src": "https://cdn.harddrop.com/7/71/SLTet.png"},
+		"flipped": {"alt": "SJ", "src": "https://cdn.harddrop.com/e/e7/SJTet.png"}
+	}, // SL <=> SJ
+	{
+		"initial": {"alt": "SS", "src": "https://cdn.harddrop.com/0/00/SSTet.png"},
+		"flipped": {"alt": "SZ", "src": "https://cdn.harddrop.com/2/28/SZTet.png"}
+	}, // SS <=> SZ
+];
 
 function flipBoard() {
 	let scope = document.body;
-	
+
 	const pattern = `:scope div > ${Array(10).fill('img[width="12"][height="12"][src^="https://"][src$=".png"]').join(' + ')}`;
 	const toUpperCase = String.prototype.toUpperCase.apply.bind(String.prototype.toUpperCase);
-	
+
 	[...scope.querySelectorAll(pattern)]
 		.map(t => t.parentElement)
 		.forEach(row => {
 			const children = [...row.childNodes].reverse();
-			
+
 			children.forEach(img => {
 				if (!(img instanceof HTMLImageElement)) {
 					return;
@@ -106,9 +132,9 @@ function flipBoard() {
 				img.alt = properties.alt;
 				img.src = properties.src;
 				img.title = properties.alt;
-		});
+			});
 
-		children.forEach(child => row.appendChild(child));
-		isBoardFlipped = !isBoardFlipped;
-	});
+			children.forEach(child => row.appendChild(child));
+			isBoardFlipped = !isBoardFlipped;
+		});
 }
